@@ -1,0 +1,181 @@
+<!-- ==================== Файл: tickets.html (Билеты и расписание) ==================== -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кинозал | Билеты и расписание</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="top-bar">
+        <div class="logo-area">
+            <div class="logo-icon">🎬🍿</div>
+            <div class="site-title">КИНОЗАЛ <span class="blue-text">BLACK</span></div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-btn">Главная</a>
+            <a href="tickets.html" class="nav-btn active">Билеты & Расписание</a>
+            <a href="gallery.html" class="nav-btn">Галерея</a>
+            <a href="contacts.html" class="nav-btn">Контакты</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="hero hero-left">
+            <h2>🎫 Покупка билетов и расписание</h2>
+            <p>Выберите сеанс и заполните форму. Билет придёт на почту (демо-режим).</p>
+        </div>
+
+        <div class="movie-grid">
+            <div class="movie-card">
+                <div class="movie-img">🏜️🐛</div>
+                <div class="movie-info">
+                    <h3>Дюна: Часть вторая</h3>
+                    <div class="movie-time">15:00, 19:30</div>
+                    <p>Цена: 450 ₽ / взрослый</p>
+                    <button class="btn-buy select-movie" data-movie="Дюна: Часть вторая" data-price="450">Выбрать сеанс</button>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="movie-img">🎭🐈</div>
+                <div class="movie-info">
+                    <h3>Мастер и Маргарита</h3>
+                    <div class="movie-time">13:20, 18:10</div>
+                    <p>Цена: 390 ₽ / взрослый</p>
+                    <button class="btn-buy select-movie" data-movie="Мастер и Маргарита" data-price="390">Выбрать сеанс</button>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="movie-img">🔥⚙️</div>
+                <div class="movie-info">
+                    <h3>Фуриоса: Безумный Макс</h3>
+                    <div class="movie-time">16:45, 21:30</div>
+                    <p>Цена: 520 ₽ / взрослый</p>
+                    <button class="btn-buy select-movie" data-movie="Фуриоса: Безумный Макс" data-price="520">Выбрать сеанс</button>
+                </div>
+            </div>
+            <div class="movie-card">
+                <div class="movie-img">🧠🎈</div>
+                <div class="movie-info">
+                    <h3>Головоломка 2</h3>
+                    <div class="movie-time">11:00, 14:20, 17:40</div>
+                    <p>Цена: 350 ₽ / взрослый</p>
+                    <button class="btn-buy select-movie" data-movie="Головоломка 2" data-price="350">Выбрать сеанс</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ticket-section" id="ticket-form">
+            <h3>✍️ Оформление билета</h3>
+            <form id="order-form">
+                <div class="form-group">
+                    <label>Фильм</label>
+                    <select id="movie-select" required>
+                        <option value="">-- выберите фильм --</option>
+                        <option value="Дюна: Часть вторая" data-price="450">Дюна: Часть вторая (450₽)</option>
+                        <option value="Мастер и Маргарита" data-price="390">Мастер и Маргарита (390₽)</option>
+                        <option value="Фуриоса: Безумный Макс" data-price="520">Фуриоса: Безумный Макс (520₽)</option>
+                        <option value="Головоломка 2" data-price="350">Головоломка 2 (350₽)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Дата сеанса</label>
+                    <input type="date" id="session-date" value="2026-05-20" required>
+                </div>
+                <div class="form-group">
+                    <label>Время сеанса</label>
+                    <select id="session-time" required>
+                        <option>10:30</option>
+                        <option>13:00</option>
+                        <option>15:45</option>
+                        <option>18:30</option>
+                        <option>21:15</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Количество билетов</label>
+                    <input type="number" id="ticket-count" min="1" max="10" value="2" required>
+                </div>
+                <button type="button" id="calc-btn" class="btn-secondary">Рассчитать стоимость</button>
+                <div id="total-display" class="order-summary">💰 Итого: 0 ₽</div>
+                <button type="submit" id="confirm-btn" class="btn-buy confirm-btn">✅ Подтвердить покупку</button>
+                <div id="form-message" class="form-message"></div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>⭐ Кинозал BLACK & BLUE | Все сеансы с эффектом полного погружения ⭐</p>
+        <p>© 2025 Кинотеатр нового поколения</p>
+    </footer>
+
+    <script>
+        // Лёгкий JS только для формы на странице билетов
+        const movieSelect = document.getElementById('movie-select');
+        const ticketCount = document.getElementById('ticket-count');
+        const calcBtn = document.getElementById('calc-btn');
+        const totalDisplay = document.getElementById('total-display');
+        const confirmBtn = document.getElementById('confirm-btn');
+        const formMessage = document.getElementById('form-message');
+        const sessionDate = document.getElementById('session-date');
+        const sessionTime = document.getElementById('session-time');
+
+        function calculateTotal() {
+            const selectedOption = movieSelect.options[movieSelect.selectedIndex];
+            const price = selectedOption?.dataset?.price ? parseInt(selectedOption.dataset.price) : 0;
+            const count = parseInt(ticketCount.value) || 1;
+            const total = price * count;
+            totalDisplay.innerHTML = `💰 Итого: ${total} ₽ (${price} ₽ × ${count} шт.)`;
+            return total;
+        }
+
+        calcBtn.addEventListener('click', calculateTotal);
+        movieSelect.addEventListener('change', calculateTotal);
+        ticketCount.addEventListener('input', calculateTotal);
+        sessionTime.addEventListener('change', calculateTotal);
+        sessionDate.addEventListener('change', calculateTotal);
+
+        // Выбрать фильм из карточек
+        document.querySelectorAll('.select-movie').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const movie = btn.dataset.movie;
+                const price = btn.dataset.price;
+                for (let i = 0; i < movieSelect.options.length; i++) {
+                    if (movieSelect.options[i].value === movie) {
+                        movieSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+                calculateTotal();
+                formMessage.innerHTML = `🎬 Вы выбрали "${movie}". Осталось выбрать дату и время.`;
+                document.getElementById('ticket-form').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        confirmBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const movie = movieSelect.value;
+            if (!movie) {
+                formMessage.innerHTML = '⚠️ Пожалуйста, выберите фильм!';
+                return;
+            }
+            const date = sessionDate.value;
+            const time = sessionTime.value;
+            const count = ticketCount.value;
+            const total = calculateTotal();
+            if (total <= 0) {
+                formMessage.innerHTML = '❌ Сумма не может быть нулевой. Выберите билеты.';
+                return;
+            }
+            formMessage.innerHTML = `✅ Бронирование успешно! Фильм "${movie}" на ${date} в ${time}, билетов: ${count}. Сумма: ${total} ₽. Билет отправлен на почту (демо). Спасибо! 🍿`;
+            // Необязательная очистка: formMessage исчезнет через 5 секунд
+            setTimeout(() => {
+                if(formMessage.innerHTML.includes('Бронирование успешно')) {
+                    // оставляем сообщение, но можно очистить если нужно
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
